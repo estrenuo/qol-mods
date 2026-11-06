@@ -12,6 +12,7 @@ export type Settings = {
   workDays: string
   excludeProjects: string
   includeNonRepo: boolean
+  nonRepoByFolder: boolean
   includePrompts: boolean
   weekStartsOn: 'monday' | 'sunday'
   roundTo: number
@@ -29,6 +30,7 @@ export const DEFAULTS: Settings = {
   workDays: 'mon,tue,wed,thu,fri',
   excludeProjects: '',
   includeNonRepo: false,
+  nonRepoByFolder: false,
   includePrompts: true,
   weekStartsOn: 'monday',
   roundTo: 15,
@@ -56,6 +58,7 @@ export function settingsFrom(options: Readonly<Record<string, unknown>>): Settin
     workDays: pick('workDays', v => typeof v === 'string' && workDaysFrom(v).size > 0),
     excludeProjects: pick('excludeProjects', v => typeof v === 'string'),
     includeNonRepo: pick('includeNonRepo', v => typeof v === 'boolean'),
+    nonRepoByFolder: pick('nonRepoByFolder', v => typeof v === 'boolean'),
     includePrompts: pick('includePrompts', v => typeof v === 'boolean'),
     weekStartsOn: pick('weekStartsOn', v => v === 'monday' || v === 'sunday'),
     roundTo: pick('roundTo', v => typeof v === 'number' && ROUNDINGS.includes(v)),
@@ -138,6 +141,7 @@ export function argvFor(root: string, paths: Paths, settings: Settings, from: st
   if (settings.extraRoots.trim()) argv.push('--extra-roots', settings.extraRoots)
   if (settings.excludeProjects.trim()) argv.push('--exclude', settings.excludeProjects)
   if (settings.includeNonRepo) argv.push('--include-non-repo')
+  if (settings.includeNonRepo && settings.nonRepoByFolder) argv.push('--non-repo-by-folder')
   if (!settings.includePrompts) argv.push('--no-asks')
   return argv
 }

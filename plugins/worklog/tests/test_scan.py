@@ -174,6 +174,18 @@ class ScanTest(unittest.TestCase):
         self.assertEqual([r["name"] for r in day["repos"]], ["Other"])
         self.assertEqual(day["totalMin"], 6)
 
+    def test_non_repo_by_folder_gives_each_folder_its_own_group(self):
+        opdracht = os.path.join(self.home, "Documents", "Opdrachten zoeken")
+        boeken = os.path.join(self.home, "Documents", "Boekenonderzoek")
+        os.makedirs(opdracht)
+        os.makedirs(boeken)
+        self.prompt("s1", at("10:00"), opdracht, "")
+        self.prompt("s2", at("11:00"), boeken, "")
+        self.prompt("s3", at("12:00"), self.home, "")
+        day = self.day("--include-non-repo", "--non-repo-by-folder")
+        self.assertEqual(sorted(r["name"] for r in day["repos"]),
+                         ["Boekenonderzoek", "Opdrachten zoeken", "Other"])
+
     def test_a_pr_link_names_the_branchs_pr(self):
         self.prompt("s1", at("10:00"), self.app, "feat")
         self.add("s1", "pr-link", at("10:03"), prNumber=7, prUrl="https://github.com/me/app/pull/7",

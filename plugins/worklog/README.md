@@ -131,6 +131,7 @@ Open `/config` and find worklog, or set them under `pluginConfigs.worklog.option
 | Work days | mon–fri | `/standup` reports since the last one |
 | Folders to leave out | none | Never read, such as client work |
 | Count work outside repos | off | Show it as "Other" |
+| Name work outside repos by folder | off | With the setting above on: a group per folder, named after it, instead of one "Other" |
 | Quote your prompts | on | Up to three of your prompts per branch in the summaries |
 | Week starts on | monday | The first day of a timesheet week |
 | Round the timesheet to | 15 min | 0, 5, 6, 10, 15, 30 or 60; each day's cells still add up to its rounded total |

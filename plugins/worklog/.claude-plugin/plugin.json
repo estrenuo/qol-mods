@@ -1,6 +1,6 @@
 {
   "name": "worklog",
-  "version": "0.3.1",
+  "version": "0.3.1-estrenuo.1",
   "description": "What you worked on, day by day, from your Claude Code sessions and git: /standup for the last work day or the week, /worklog for any day or a week's timesheet, by repo, PR and branch with the time spent",
   "author": { "name": "Aseem Upadhyay", "url": "https://github.com/aseem-upadhyay" },
   "homepage": "https://github.com/aseem-upadhyay/qol-mods/tree/main/plugins/worklog",
@@ -56,6 +56,12 @@
       "type": "boolean",
       "title": "Count work outside repos",
       "description": "Show sessions in folders that aren't git repos as Other",
+      "default": false
+    },
+    "nonRepoByFolder": {
+      "type": "boolean",
+      "title": "Name work outside repos by folder",
+      "description": "With Count work outside repos on: each folder gets its own group, named after the folder, instead of one Other. Work in the home folder stays Other",
       "default": false
     },
     "includePrompts": {

@@ -332,6 +332,7 @@ def main(argv=None):
     ap.add_argument("--day-start", default="04:00")
     ap.add_argument("--exclude", default="")
     ap.add_argument("--include-non-repo", action="store_true")
+    ap.add_argument("--non-repo-by-folder", action="store_true")
     # Leave the user's own prompts out of what's reported.
     ap.add_argument("--no-asks", dest="asks", action="store_false")
     # Folders whose work never counts: scratch repos Claude makes and drops.
@@ -422,7 +423,10 @@ def main(argv=None):
                 if root is None:
                     if not args.include_non_repo:
                         continue
-                    root = ""
+                    # By folder: each folder outside a repo is its own group,
+                    # named after the folder; the home folder stays Other.
+                    folder = os.path.normpath(cwd)
+                    root = folder if args.non_repo_by_folder and folder != home else ""
                 elif excluded(root, excludes):
                     continue
                 key = (root, branch if root else "")
